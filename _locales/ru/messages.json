@@ -1,0 +1,5 @@
+{
+  "extName":        { "message": "Wingspan Helper (BGA)" },
+  "extDescription": { "message": "Читает текущую партию в «Крылья» на Board Game Arena и подсказывает самый эффективный ход. Только чтение — за вас ничего не нажимает." },
+  "cmdTogglePanel": { "message": "Показать / скрыть панель подсказок" }
+}

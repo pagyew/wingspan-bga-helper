@@ -1,0 +1,47 @@
+name: Release
+
+on:
+  push:
+    tags: ['v*']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - run: npm install --no-audit --no-fund
+      - run: npm run check
+      - run: npm test
+
+      - name: Check that the tag matches package.json
+        run: |
+          TAG="${GITHUB_REF_NAME#v}"
+          PKG=$(node -p "require('./package.json').version")
+          if [ "$TAG" != "$PKG" ]; then
+            echo "tag $GITHUB_REF_NAME does not match package.json version $PKG" >&2
+            exit 1
+          fi
+
+      - name: Build and package
+        run: npm run package
+
+      - name: Publish release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: wingspan-bga-helper-*.zip
+          generate_release_notes: true
+          body: |
+            Unzip and load the folder at `chrome://extensions` with developer mode on.
+            Chrome 111 or newer is required.
+
+            This extension is read-only and is not published to the Chrome Web Store.
+            Please read the note on Board Game Arena's terms of use in the README
+            before using it in a live game.

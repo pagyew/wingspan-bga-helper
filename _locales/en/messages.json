@@ -1,0 +1,5 @@
+{
+  "extName":        { "message": "Wingspan Helper (BGA)" },
+  "extDescription": { "message": "Reads a live Wingspan game on Board Game Arena and suggests the strongest next move. Read-only — it never clicks for you." },
+  "cmdTogglePanel": { "message": "Show / hide the advisor panel" }
+}

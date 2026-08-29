@@ -1,0 +1,9 @@
+This project is licensed under the GNU General Public License v3.0 or later.
+
+The full license text belongs in this file. `scripts/bootstrap-github.sh` fetches
+it from https://www.gnu.org/licenses/gpl-3.0.txt before the first commit; if you
+are reading this placeholder in a published repository, fetch it manually:
+
+    curl -o LICENSE https://www.gnu.org/licenses/gpl-3.0.txt
+
+SPDX-License-Identifier: GPL-3.0-or-later

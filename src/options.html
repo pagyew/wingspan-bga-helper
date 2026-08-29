@@ -1,0 +1,31 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>Wingspan Helper — options</title>
+<style>
+  body { font: 14px/1.5 -apple-system, "Segoe UI", Roboto, sans-serif; margin: 24px; max-width: 34rem; }
+  h1 { font-size: 18px; margin: 0 0 16px; }
+  label { display: block; margin: 14px 0 4px; font-weight: 600; }
+  p.hint { margin: 4px 0 0; color: #666; font-size: 13px; }
+  select { font: inherit; padding: 4px 6px; }
+</style>
+<h1>Wingspan Helper</h1>
+
+<label for="locale">Interface language / Язык интерфейса</label>
+<select id="locale">
+  <option value="auto">Follow the BGA page / Как на странице BGA</option>
+  <option value="en">English</option>
+  <option value="ru">Русский</option>
+</select>
+<p class="hint">
+  Action names are quoted the way BGA spells them, so following the page language
+  keeps a hint readable as an instruction. /
+  Названия действий берутся из интерфейса BGA — поэтому по умолчанию язык совпадает со страницей.
+</p>
+
+<label for="mode">Default mode / Режим по умолчанию</label>
+<select id="mode">
+  <option value="advice">Advice on my turn / Совет в свой ход</option>
+  <option value="watch">Watch every turn / Наблюдение весь матч</option>
+</select>
+
+<script src="options.js"></script>

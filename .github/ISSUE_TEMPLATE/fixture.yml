@@ -1,0 +1,35 @@
+name: Game fixture
+description: Contribute a finished game so the scorer can be verified against it
+labels: [fixture]
+body:
+  - type: markdown
+    attributes:
+      value: >
+        Finished games are the most valuable contribution to this project. A blue
+        goal board, or 3–5 players, covers ground nothing else does.
+  - type: input
+    id: table
+    attributes:
+      label: Table number
+    validations: { required: true }
+  - type: dropdown
+    id: board
+    attributes:
+      label: Goal board
+      options: ['green (points)', 'blue (places)', 'not sure']
+    validations: { required: true }
+  - type: input
+    id: players
+    attributes:
+      label: Number of players
+  - type: textarea
+    id: final
+    attributes:
+      label: Final scores as BGA reported them
+      placeholder: "pagyew 91 : Exixel 89"
+    validations: { required: true }
+  - type: textarea
+    id: snapshot
+    attributes:
+      label: Snapshot JSON
+      render: json

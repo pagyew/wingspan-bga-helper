@@ -1,0 +1,33 @@
+name: Bug report
+description: The panel showed something wrong, or nothing at all
+labels: [bug]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What happened
+      placeholder: The panel said "could not read the position" halfway through round 3.
+    validations: { required: true }
+  - type: textarea
+    id: snapshot
+    attributes:
+      label: Snapshot
+      description: >
+        Press "Copy snapshot" in the panel and paste the JSON here. This is by far
+        the most useful part of a bug report — it turns straight into a test.
+      render: json
+  - type: input
+    id: table
+    attributes:
+      label: BGA table or replay URL
+      placeholder: https://boardgamearena.com/archive/replay/...
+  - type: input
+    id: chrome
+    attributes:
+      label: Chrome version
+      placeholder: "141.0.0.0"
+  - type: input
+    id: version
+    attributes:
+      label: Extension version
+      placeholder: "0.1.0"
