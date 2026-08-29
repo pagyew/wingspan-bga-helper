@@ -36,7 +36,7 @@ else
 fi
 
 git rev-parse --git-dir >/dev/null 2>&1 || git init
-git symbolic-ref HEAD refs/heads/main 2>/dev/null || git branch -M main
+git branch -M main 2>/dev/null || git checkout -b main
 git remote get-url origin >/dev/null 2>&1 || git remote add origin "https://github.com/$SLUG.git"
 
 git add -A
@@ -156,7 +156,7 @@ issue "$M6" "docs" \
 
 issue "$M2" "engine,help wanted" \
   "Support the blue goal board" \
-  $'Its scoring table lives on BGA'"'"'s server, not in the client, so it cannot be read the way everything else is. `scoreGoal()` raises an explicit error rather than guessing.\n\nDone when: a finished game on the blue board is available as a fixture and the place-to-points mapping is confirmed against it. **A recorded blue-board game is what unblocks this.**'
+  $'Its scoring table lives on the BGA server, not in the client, so it cannot be read the way everything else is. `scoreGoal()` raises an explicit error rather than guessing.\n\nDone when: a finished game on the blue board is available as a fixture and the place-to-points mapping is confirmed against it. **A recorded blue-board game is what unblocks this.**'
 
 # --------------------------------------------------------------------- project
 say "Project board"
