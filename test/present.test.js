@@ -1,9 +1,10 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { headline, statusLine, detailLine, buildView } from '../src/ui/present.js';
+import { headline, statusLine, detailLine, buildView, moveName, moveWhy, adviceMoves } from '../src/ui/present.js';
 import { translator } from '../src/ui/i18n.js';
 
 const t = translator('en');
+const tRu = translator('ru');
 
 /** Trimmed shape of a real snapshot — see docs/reference-game.md. */
 const state = {
@@ -49,4 +50,50 @@ test('the blue goal board is reported, never silently zeroed', () => {
     state, problems: ['blue goal board is not supported yet'], t, mode: 'advice', advice: null
   });
   assert.ok(view.notes.some((n) => /Blue goal board/.test(n.text)));
+});
+
+/** Move names quote BGA's own button labels — see CLAUDE.md, "Style". */
+test('a row move is named after the habitat action, in both languages', () => {
+  const action = { type: 'row', habitat: 'forest', trade: false, info: { unit: 'food', gain: 2 } };
+  assert.equal(moveName(t, () => '', action), 'Gain food — Forest');
+  assert.equal(moveName(tRu, () => '', action), 'Взять еду — Лес');
+});
+
+test('a play-bird move names the bird in the panel\'s own locale', () => {
+  const action = { type: 'playBird', bird: 'bushtit', habitat: 'wetland' };
+  const enName = (key) => (key === 'bushtit' ? 'Bushtit' : key);
+  const ruName = (key) => (key === 'bushtit' ? 'Кустарница' : key);
+  assert.equal(moveName(t, enName, action), 'Play a bird: Bushtit → Wetland');
+  assert.equal(moveName(tRu, ruName, action), 'Сыграть птицу: Кустарница → Болото');
+});
+
+test('why explains the egg cost of playing a bird, including "none needed"', () => {
+  assert.equal(moveWhy(t, { action: { type: 'playBird', eggCost: 2 } }), 'Eggs needed: 2');
+  assert.equal(moveWhy(t, { action: { type: 'playBird', eggCost: 0 } }), 'No eggs needed');
+});
+
+test('why reports a row action\'s yield, marking trades', () => {
+  const plain = { action: { type: 'row', trade: false, info: { unit: 'card', gain: 2 } } };
+  const traded = { action: { type: 'row', trade: true, info: { unit: 'card', gain: 2 } } };
+  assert.equal(moveWhy(t, plain), '+2 cards');
+  assert.equal(moveWhy(t, traded), '+3 cards (with trade)');
+});
+
+test('adviceMoves takes only the top 3 ranked options and carries the raw gain as delta', () => {
+  const result = {
+    options: [
+      { action: { type: 'row', habitat: 'forest', trade: false, info: { unit: 'food', gain: 1 } }, gain: 2.5 },
+      { action: { type: 'row', habitat: 'grassland', trade: false, info: { unit: 'egg', gain: 2 } }, gain: 1.2 },
+      { action: { type: 'row', habitat: 'wetland', trade: false, info: { unit: 'card', gain: 1 } }, gain: 0.8 },
+      { action: { type: 'row', habitat: 'forest', trade: true, info: { unit: 'food', gain: 1 } }, gain: 0.1 }
+    ]
+  };
+  const moves = adviceMoves(result, t, () => '');
+  assert.equal(moves.length, 3);
+  assert.equal(moves[0].delta, 2.5);
+  assert.equal(moves[0].name, 'Gain food — Forest');
+});
+
+test('adviceMoves is empty without a result — an unwired or gated evaluator shows no hints', () => {
+  assert.deepEqual(adviceMoves(null, t, () => ''), []);
 });
