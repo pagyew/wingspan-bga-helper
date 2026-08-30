@@ -13,6 +13,9 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { createEngine } from '../src/engine/index.js';
+import { fromSnapshot } from '../src/engine/from-snapshot.js';
+import { adviceMoves } from '../src/ui/present.js';
+import { translator } from '../src/ui/i18n.js';
 
 const engine = createEngine();
 const H = { F: 'forest', G: 'grassland', W: 'wetland' };
@@ -67,4 +70,75 @@ test('the top suggestion matches what the player actually did: grassland, 3 eggs
   assert.equal(best.action.type, 'row');
   assert.equal(best.action.habitat, 'grassland');
   assert.equal(best.action.info.gain, 3);
+});
+
+// Issue #6's own acceptance criterion is about the *panel's* rendering, not
+// just evaluateTurn() — so this repeats the position through the real
+// extension pipeline: a src/page/state.js-shaped snapshot, fromSnapshot(),
+// then the same adviceMoves() boot.js hands to the panel.
+test('wired through the panel: the top move reads "Grassland — Lay eggs" (#6)', () => {
+  let nextBirdId = 1;
+  const birdIds = new Map();
+  const idOf = (key) => {
+    if (!birdIds.has(key)) birdIds.set(key, nextBirdId++);
+    return birdIds.get(key);
+  };
+  let nextBonusId = 0;
+  const bonusIds = new Map();
+  const bonusIdOf = (key) => {
+    if (!bonusIds.has(key)) bonusIds.set(key, nextBonusId++);
+    return bonusIds.get(key);
+  };
+
+  const asSlots = (tableau) => tableau.map((b) => ({
+    birdId: idOf(b.key), habitat: b.habitat, eggs: b.eggs, tucked: b.tucked, cached: [b.cached, 0, 0, 0, 0]
+  }));
+
+  const cardDb = { birds: {}, bonuscards: {} };
+  for (const p of state.players) {
+    for (const b of p.tableau) cardDb.birds[idOf(b.key)] = { index: idOf(b.key), identifier: b.key, name: b.key };
+    for (const key of p.handBirds) if (key) cardDb.birds[idOf(key)] = { index: idOf(key), identifier: key, name: key };
+  }
+  for (const key of state.tray) cardDb.birds[idOf(key)] = { index: idOf(key), identifier: key, name: key };
+  for (const key of state.players[0].bonus) {
+    cardDb.bonuscards[bonusIdOf(key)] = { index: bonusIdOf(key), identifier: key, name: key };
+  }
+
+  const liveSnapshot = {
+    myId: '1',
+    round: state.round,
+    stable: true,
+    myTurn: true,
+    goalBoardType: state.goalBoard,
+    goals: state.goals,
+    feeder: state.feeder,
+    tray: state.tray.map(idOf),
+    players: {
+      1: {
+        name: state.players[0].name, isMe: true, cubesLeft: state.cubesLeft,
+        food: state.players[0].food,
+        handBirds: state.players[0].handBirds.map(idOf),
+        handBonus: state.players[0].bonus.map(bonusIdOf),
+        tableau: asSlots(state.players[0].tableau)
+      },
+      2: {
+        name: state.players[1].name, isMe: false, cubesLeft: 2,
+        food: state.players[1].food,
+        handBirds: state.players[1].handBirds.map(() => null),
+        handBonus: [],
+        tableau: asSlots(state.players[1].tableau)
+      }
+    }
+  };
+
+  const input = fromSnapshot(liveSnapshot, cardDb);
+  const result = engine.suggest(input);
+  const moves = adviceMoves(result, translator('en'), (key) => key);
+
+  assert.equal(moves[0].name, 'Grassland — Lay eggs');
+  assert.equal(moves[0].why, '+3 eggs');
+  assert.ok(moves[0].delta > 0);
+
+  const movesRu = adviceMoves(result, translator('ru'), (key) => key);
+  assert.equal(movesRu[0].name, 'Степь — Положить яйца');
 });

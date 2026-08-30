@@ -55,8 +55,8 @@ test('the blue goal board is reported, never silently zeroed', () => {
 /** Move names quote BGA's own button labels — see CLAUDE.md, "Style". */
 test('a row move is named after the habitat action, in both languages', () => {
   const action = { type: 'row', habitat: 'forest', trade: false, info: { unit: 'food', gain: 2 } };
-  assert.equal(moveName(t, () => '', action), 'Gain food — Forest');
-  assert.equal(moveName(tRu, () => '', action), 'Взять еду — Лес');
+  assert.equal(moveName(t, () => '', action), 'Forest — Gain food');
+  assert.equal(moveName(tRu, () => '', action), 'Лес — Взять еду');
 });
 
 test('a play-bird move names the bird in the panel\'s own locale', () => {
@@ -91,7 +91,7 @@ test('adviceMoves takes only the top 3 ranked options and carries the raw gain a
   const moves = adviceMoves(result, t, () => '');
   assert.equal(moves.length, 3);
   assert.equal(moves[0].delta, 2.5);
-  assert.equal(moves[0].name, 'Gain food — Forest');
+  assert.equal(moves[0].name, 'Forest — Gain food');
 });
 
 test('adviceMoves is empty without a result — an unwired or gated evaluator shows no hints', () => {

@@ -58,7 +58,7 @@ export function moveName(t, birdName, action) {
   if (action.type === 'playBird') {
     return `${t('actionPlayBird')}: ${birdName(action.bird)} → ${habitatLabel(t, action.habitat)}`;
   }
-  return `${t(ROW_ACTION_KEY[action.info.unit])} — ${habitatLabel(t, action.habitat)}`;
+  return `${habitatLabel(t, action.habitat)} — ${t(ROW_ACTION_KEY[action.info.unit])}`;
 }
 
 /** One-line rationale for a move: what it costs or what it yields. */
