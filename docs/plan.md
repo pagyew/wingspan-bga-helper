@@ -72,6 +72,13 @@ of the tool and the main reason it survives client updates.
 M4 comes before M5 on purpose: there is nothing to tune weights against until
 turning a live game into a fixture is a single click.
 
+**Game recorder.** A second, bulk form of M4: the panel's **Start recording**
+button captures every snapshot of a whole game and downloads one JSON file when
+`gamestate.name` reaches `gameEnd`, or on a manual stop. `src/ui/recorder.js` holds
+the (pure, tested) recording shape; `boot.js` wires it to storage so a reload
+mid-game resumes rather than loses the session. Meant for handing a finished game
+to an LLM for analysis, not just for fixtures.
+
 ## Sub-decisions
 
 A player is more often standing at a dialog inside a turn than choosing the turn

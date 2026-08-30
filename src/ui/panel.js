@@ -6,7 +6,7 @@ import { PANEL_CSS } from './styles.js';
 const HOST_ID = 'wingspan-helper-root';
 
 export class Panel {
-  constructor({ t, onRefresh, onToggleMode, onSnapshot, position }) {
+  constructor({ t, onRefresh, onToggleMode, onToggleRecording, onSnapshot, position }) {
     this.t = t;
     this.host = document.createElement('div');
     this.host.id = HOST_ID;
@@ -29,7 +29,11 @@ export class Panel {
         <ul class="moves"></ul>
         <div class="detail sub"></div>
         <div class="notes"></div>
-        <button class="btn snapshot" type="button" style="margin-top:8px"></button>
+        <div class="devtools">
+          <button class="btn snapshot" type="button"></button>
+          <button class="btn record" type="button" aria-pressed="false"></button>
+          <span class="sub recstatus"></span>
+        </div>
       </div>
     `;
 
@@ -41,9 +45,11 @@ export class Panel {
     this.$('.collapse').title = t('collapse');
     this.$('.snapshot').textContent = t('snapshot');
     this.$('.mode').textContent = t('modeAdvice');
+    this.$('.record').textContent = t('recordStart');
 
     this.$('.refresh').addEventListener('click', onRefresh);
     this.$('.snapshot').addEventListener('click', onSnapshot);
+    this.$('.record').addEventListener('click', onToggleRecording);
     this.$('.mode').addEventListener('click', () => onToggleMode());
     this.$('.collapse').addEventListener('click', () => this.toggleCollapsed());
 
@@ -114,8 +120,9 @@ export class Panel {
    * @param {string} view.status        one-line state description
    * @param {Array}  view.moves         [{ name, why, delta }]
    * @param {string} view.detail        goals / bonus / opponent summary
-   * @param {Array}  view.notes         [{ text, kind: 'warn'|'error' }]
+   * @param {Array}  view.notes         [{ text, kind: 'warn'|'error'|'ok' }]
    * @param {string} view.mode          'advice' | 'watch'
+   * @param {object} [view.recording]   { active, count } — full-game recorder status
    */
   render(view) {
     const t = this.t;
@@ -125,6 +132,12 @@ export class Panel {
     const mode = this.$('.mode');
     mode.textContent = view.mode === 'watch' ? t('modeWatch') : t('modeAdvice');
     mode.setAttribute('aria-pressed', String(view.mode === 'watch'));
+
+    const rec = view.recording || { active: false, count: 0 };
+    const record = this.$('.record');
+    record.textContent = rec.active ? t('recordStop') : t('recordStart');
+    record.setAttribute('aria-pressed', String(rec.active));
+    this.$('.recstatus').textContent = rec.active ? `● ${rec.count}` : '';
 
     const list = this.$('.moves');
     list.textContent = '';
@@ -155,7 +168,7 @@ export class Panel {
     notes.textContent = '';
     for (const note of view.notes || []) {
       const div = document.createElement('div');
-      div.className = 'note' + (note.kind === 'error' ? ' error' : '');
+      div.className = 'note' + (note.kind ? ' ' + note.kind : '');
       div.textContent = note.text;
       notes.append(div);
     }
