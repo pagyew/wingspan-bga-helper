@@ -3,6 +3,10 @@
 This is where the rules model goes: mat geometry, end-of-game scoring and the
 move evaluator, as described in `docs/plan.md` (milestone M2).
 
+**The code already exists and is verified — it just has not been committed yet.**
+`docs/engine-port.md` says where it lives, what has to change on the way in, and
+what counts as a correct port. Read that before writing anything here.
+
 The engine is plain ESM with no dependencies, so the same files run under
 `node --test` and inside the extension bundle. It must not touch the DOM or
 `chrome.*` — the only thing it ever sees is a snapshot produced by
