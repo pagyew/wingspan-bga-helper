@@ -1,0 +1,210 @@
+{
+ "table": 906782034,
+ "source": "BGA archive replay, финальное состояние",
+ "goalBoard": "green",
+ "goals": [
+  {
+   "description": "Eggs in bowl nests",
+   "recorded": [
+    4,
+    4
+   ],
+   "historic": true
+  },
+  {
+   "description": "Birds in forest",
+   "recorded": [
+    3,
+    3
+   ],
+   "historic": true
+  },
+  {
+   "description": "Eggs in platform nests",
+   "recorded": [
+    6,
+    2
+   ],
+   "historic": true
+  },
+  {
+   "description": "Birds with eggs in cavity nests",
+   "recorded": [
+    7,
+    5
+   ],
+   "historic": false
+  }
+ ],
+ "players": [
+  {
+   "name": "pagyew",
+   "handBirdCount": 1,
+   "bonus": [
+    "anatomist"
+   ],
+   "tableau": [
+    {
+     "habitat": "forest",
+     "eggs": 0,
+     "key": "rubycrownedkinglet"
+    },
+    {
+     "habitat": "forest",
+     "eggs": 1,
+     "key": "redbelliedwoodpecker"
+    },
+    {
+     "habitat": "forest",
+     "eggs": 1,
+     "key": "carolinawren"
+    },
+    {
+     "habitat": "forest",
+     "eggs": 1,
+     "key": "baltimoreoriole"
+    },
+    {
+     "habitat": "grassland",
+     "eggs": 0,
+     "cached": 2,
+     "key": "mississippikite"
+    },
+    {
+     "habitat": "grassland",
+     "eggs": 0,
+     "key": "scissortailedflycatcher"
+    },
+    {
+     "habitat": "grassland",
+     "eggs": 1,
+     "key": "housewren"
+    },
+    {
+     "habitat": "grassland",
+     "eggs": 1,
+     "key": "blackbilledmagpie"
+    },
+    {
+     "habitat": "grassland",
+     "eggs": 0,
+     "key": "wildturkey"
+    },
+    {
+     "habitat": "wetland",
+     "eggs": 1,
+     "tucked": 5,
+     "key": "bushtit"
+    },
+    {
+     "habitat": "wetland",
+     "eggs": 0,
+     "key": "commonyellowthroat"
+    },
+    {
+     "habitat": "wetland",
+     "eggs": 1,
+     "key": "beltedkingfisher"
+    },
+    {
+     "habitat": "wetland",
+     "eggs": 0,
+     "key": "prothonotarywarbler"
+    }
+   ]
+  },
+  {
+   "name": "Exixel",
+   "handBirdCount": 1,
+   "bonus": [
+    "omnivorespecialist"
+   ],
+   "tableau": [
+    {
+     "habitat": "forest",
+     "eggs": 3,
+     "cached": 4,
+     "key": "redbreastednuthatch"
+    },
+    {
+     "habitat": "forest",
+     "eggs": 2,
+     "key": "rubythroatedhummingbird"
+    },
+    {
+     "habitat": "forest",
+     "eggs": 3,
+     "cached": 3,
+     "key": "carolinachickadee"
+    },
+    {
+     "habitat": "grassland",
+     "eggs": 2,
+     "key": "easternphoebe"
+    },
+    {
+     "habitat": "grassland",
+     "eggs": 2,
+     "cached": 1,
+     "key": "redheadedwoodpecker"
+    },
+    {
+     "habitat": "grassland",
+     "eggs": 1,
+     "tucked": 8,
+     "key": "sandhillcrane"
+    },
+    {
+     "habitat": "wetland",
+     "eggs": 2,
+     "tucked": 2,
+     "key": "treeswallow"
+    },
+    {
+     "habitat": "wetland",
+     "eggs": 2,
+     "key": "greatblueheron"
+    },
+    {
+     "habitat": "wetland",
+     "eggs": 2,
+     "key": "blackskimmer"
+    }
+   ]
+  }
+ ],
+ "expected": {
+  "pagyew": {
+   "birds": 52,
+   "bonus": 7,
+   "goals": 18,
+   "eggs": 7,
+   "cached": 2,
+   "tucked": 5,
+   "total": 91
+  },
+  "Exixel": {
+   "birds": 34,
+   "bonus": 6,
+   "goals": 12,
+   "eggs": 19,
+   "cached": 8,
+   "tucked": 10,
+   "total": 89
+  }
+ },
+ "expectedGoalVp": {
+  "pagyew": [
+   2,
+   3,
+   6,
+   7
+  ],
+  "Exixel": [
+   2,
+   3,
+   3,
+   4
+  ]
+ }
+}

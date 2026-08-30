@@ -50,6 +50,42 @@ export function detailLine(state, t) {
   return parts.join('\n');
 }
 
+const ROW_ACTION_KEY = { food: 'actionGainFood', egg: 'actionLayEggs', card: 'actionDrawCards' };
+const ROW_UNIT_KEY = { food: 'unitFood', egg: 'unitEgg', card: 'unitCard' };
+
+/** Names a move the way BGA's own buttons name it, so a hint reads as an instruction. */
+export function moveName(t, birdName, action) {
+  if (action.type === 'playBird') {
+    return `${t('actionPlayBird')}: ${birdName(action.bird)} → ${habitatLabel(t, action.habitat)}`;
+  }
+  return `${habitatLabel(t, action.habitat)} — ${t(ROW_ACTION_KEY[action.info.unit])}`;
+}
+
+/** One-line rationale for a move: what it costs or what it yields. */
+export function moveWhy(t, option) {
+  const a = option.action;
+  if (a.type === 'playBird') {
+    return a.eggCost ? `${t('eggsNeeded')}: ${a.eggCost}` : t('noEggsNeeded');
+  }
+  const amount = a.info.gain + (a.trade ? 1 : 0);
+  const unit = t(ROW_UNIT_KEY[a.info.unit]);
+  return a.trade ? `+${amount} ${unit} (${t('tradeApplied')})` : `+${amount} ${unit}`;
+}
+
+/**
+ * Evaluator ranking -> the panel's move list.
+ * @param {object|null} result       return value of createEngine().suggest()
+ * @param {(key: string) => string} birdName  key -> display name in the panel's own locale
+ */
+export function adviceMoves(result, t, birdName) {
+  if (!result || !result.options) return [];
+  return result.options.slice(0, 3).map((option) => ({
+    name: moveName(t, birdName, option.action),
+    why: moveWhy(t, option),
+    delta: option.gain
+  }));
+}
+
 export function buildView({ state, problems, t, mode, advice }) {
   return {
     headline: headline(state, t),

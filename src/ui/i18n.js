@@ -26,7 +26,8 @@ const STRINGS = {
     goals: 'Goals',
     bonus: 'Bonus',
     opponent: 'Opponent',
-    noAdviceYet: 'The evaluator is not wired up yet — see docs/plan.md, milestone M2.',
+    noAdviceYet: 'No advice available for this position.',
+    evalError: 'Could not evaluate this position',
     // Action names, spelled the way BGA spells them.
     actionPlayBird: 'Play a bird',
     actionGainFood: 'Gain food',
@@ -34,7 +35,13 @@ const STRINGS = {
     actionDrawCards: 'Draw bird cards',
     forest: 'Forest',
     grassland: 'Grassland',
-    wetland: 'Wetland'
+    wetland: 'Wetland',
+    unitFood: 'food',
+    unitEgg: 'eggs',
+    unitCard: 'cards',
+    eggsNeeded: 'Eggs needed',
+    noEggsNeeded: 'No eggs needed',
+    tradeApplied: 'with trade'
   },
   ru: {
     title: 'Wingspan Helper',
@@ -55,14 +62,21 @@ const STRINGS = {
     goals: 'Цели',
     bonus: 'Бонус',
     opponent: 'Соперник',
-    noAdviceYet: 'Оценщик ещё не подключён — см. docs/plan.md, этап M2.',
+    noAdviceYet: 'Для этой позиции совета нет.',
+    evalError: 'Не удалось оценить позицию',
     actionPlayBird: 'Сыграть птицу',
     actionGainFood: 'Взять еду',
     actionLayEggs: 'Положить яйца',
     actionDrawCards: 'Взять карты птиц',
     forest: 'Лес',
     grassland: 'Степь',
-    wetland: 'Болото'
+    wetland: 'Болото',
+    unitFood: 'корма',
+    unitEgg: 'яиц',
+    unitCard: 'карт',
+    eggsNeeded: 'Нужно яиц',
+    noEggsNeeded: 'Яйца не нужны',
+    tradeApplied: 'с обменом'
   }
 };
 

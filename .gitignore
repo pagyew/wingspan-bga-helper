@@ -5,3 +5,6 @@ dist/
 .env
 *.log
 test/fixtures/private/
+
+# Исходники движка (CommonJS) — материал для переноса в src/engine/, не часть репозитория
+.engine-src/
