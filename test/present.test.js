@@ -1,6 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { headline, statusLine, detailLine, buildView, moveName, moveWhy, adviceMoves } from '../src/ui/present.js';
+import {
+  headline, statusLine, detailLine, buildView, moveName, moveWhy, adviceMoves, recordingNotes
+} from '../src/ui/present.js';
 import { translator } from '../src/ui/i18n.js';
 
 const t = translator('en');
@@ -50,6 +52,24 @@ test('the blue goal board is reported, never silently zeroed', () => {
     state, problems: ['blue goal board is not supported yet'], t, mode: 'advice', advice: null
   });
   assert.ok(view.notes.some((n) => /Blue goal board/.test(n.text)));
+});
+
+test('buildView defaults recording status when none is given', () => {
+  const view = buildView({ state, problems: [], t, mode: 'advice', advice: null });
+  assert.deepEqual(view.recording, { active: false, count: 0 });
+});
+
+test('a finished recording is announced with its snapshot count', () => {
+  const view = buildView({
+    state, problems: [], t, mode: 'advice', advice: null,
+    recording: { active: false, count: 0 },
+    recordingEvent: { reason: 'gameEnd', count: 128 }
+  });
+  assert.ok(view.notes.some((n) => /Game finished.*\(128\)/.test(n.text)));
+});
+
+test('recordingNotes is silent with no event', () => {
+  assert.deepEqual(recordingNotes(null, t), []);
 });
 
 /** Move names quote BGA's own button labels — see CLAUDE.md, "Style". */

@@ -12,8 +12,13 @@ import { fromSnapshot } from '../engine/from-snapshot.js';
 import { resolveLocale, translator } from './i18n.js';
 import { Panel } from './panel.js';
 import { buildView, adviceMoves } from './present.js';
+import {
+  extractTableId, createRecording, appendState, appendError,
+  finish, isFinished, countStates, fileName
+} from './recorder.js';
 
 const SETTINGS_KEY = 'wsh.settings';
+const RECORDING_KEY = 'wsh.recording';
 const DEFAULTS = { mode: 'advice', locale: 'auto', visible: true, layout: {} };
 
 const engine = createEngine();
@@ -25,6 +30,8 @@ let dbHash = null;
 let birdIndex = null; // identifier -> live card record, rebuilt whenever db changes
 let latest = null;
 let adviceCache = { key: null, moves: [], error: null };
+let recording = null; // set while a "record the whole game" session is active
+let resumedNotice = null; // set once, shown on the first HELLO after a reload
 
 /** Cheap, order-independent hash — same approach as fingerprint() in page/state.js. */
 function hashString(s) {
@@ -84,6 +91,49 @@ const writeSettings = async () => {
   }
 };
 
+const readRecording = async () => {
+  try {
+    const stored = await chrome.storage.local.get(RECORDING_KEY);
+    return stored[RECORDING_KEY] || null;
+  } catch {
+    return null;
+  }
+};
+
+// Written after every entry so a reload mid-game (a BGA reconnect, a crash) does
+// not lose the recording — see the resume check near the bottom of this file.
+const writeRecording = async () => {
+  try {
+    if (recording) await chrome.storage.local.set({ [RECORDING_KEY]: recording });
+    else await chrome.storage.local.remove(RECORDING_KEY);
+  } catch {
+    /* storage can be unavailable in a locked-down profile — recording still works in memory */
+  }
+};
+
+/** No `chrome.downloads` permission needed: a Blob URL and a synthetic click do the job. */
+function downloadRecording(rec) {
+  const blob = new Blob([JSON.stringify(rec, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = fileName(rec);
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
+
+function stopRecording(reason) {
+  if (!recording) return;
+  finish(recording, reason);
+  const count = countStates(recording);
+  downloadRecording(recording);
+  recording = null;
+  writeRecording();
+  redraw({ recordingEvent: { reason, count } });
+}
+
 function ensurePanel() {
   if (panel) return panel;
   const t = translator(resolveLocale(settings.locale));
@@ -94,6 +144,22 @@ function ensurePanel() {
     onToggleMode: () => {
       settings.mode = settings.mode === 'advice' ? 'watch' : 'advice';
       writeSettings();
+      redraw();
+    },
+    onToggleRecording: async () => {
+      if (recording) {
+        stopRecording('manual');
+        return;
+      }
+      const tableId = extractTableId(location.href);
+      const stale = await readRecording();
+      if (stale && stale.tableId !== tableId && countStates(stale) > 0) {
+        downloadRecording(finish(stale, 'orphaned')); // do not lose an abandoned session
+      }
+      recording = createRecording({ tableId, url: location.href });
+      if (db) { recording.db = db; recording.dbHash = dbHash; }
+      if (latest) appendState(recording, latest, null, validateState(latest, db));
+      writeRecording();
       redraw();
     },
     onSnapshot: async () => {
@@ -128,6 +194,7 @@ function redraw(extra = {}) {
       t,
       mode: settings.mode,
       advice: moves,
+      recording: { active: Boolean(recording), count: countStates(recording) },
       ...extra
     })
   );
@@ -139,7 +206,12 @@ window.addEventListener('message', (event) => {
 
   if (data.type === MSG.HELLO) {
     ensurePanel();
-    redraw();
+    if (resumedNotice) {
+      redraw({ recordingEvent: resumedNotice });
+      resumedNotice = null;
+    } else {
+      redraw();
+    }
     return;
   }
 
@@ -153,16 +225,32 @@ window.addEventListener('message', (event) => {
       return;
     }
     latest = data.state;
+
+    if (recording) {
+      if (!recording.db && db) { recording.db = db; recording.dbHash = dbHash; }
+      appendState(recording, latest, data.seq, validateState(latest, db));
+      writeRecording();
+      if (isFinished(latest)) {
+        stopRecording('gameEnd');
+        return; // stopRecording already redrew with the "saved" note
+      }
+    }
+
     if (settings.mode === 'watch' || latest.myTurn) redraw();
     return;
   }
 
   if (data.type === MSG.ERROR) {
+    if (recording) {
+      appendError(recording, { where: data.where, message: data.message });
+      writeRecording();
+    }
     const t = translator(resolveLocale(settings.locale));
     ensurePanel().render({
       headline: t('title'),
       status: '',
       mode: settings.mode,
+      recording: { active: Boolean(recording), count: countStates(recording) },
       moves: [],
       detail: '',
       notes: [{ text: `${t('readError')} (${data.where}: ${data.message})`, kind: 'error' }]
@@ -180,4 +268,15 @@ chrome.runtime.onMessage.addListener((message) => {
 
 readSettings().then((loaded) => {
   settings = loaded;
+});
+
+// A reload mid-game (BGA reconnect, crash, accidental refresh) must not lose the
+// recording: resume in memory here, silently — the "resumed" note surfaces on the
+// next HELLO, which only fires in the frame that actually hosts the game.
+readRecording().then((stored) => {
+  const tableId = extractTableId(location.href);
+  if (stored && tableId && stored.tableId === tableId) {
+    recording = stored;
+    resumedNotice = { reason: 'resumed', count: countStates(recording) };
+  }
 });

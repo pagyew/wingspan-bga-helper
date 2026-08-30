@@ -109,6 +109,11 @@ npm run package    # dist/ -> a zip ready for chrome://extensions
 The panel's **Copy snapshot** button puts the current position on the clipboard as
 JSON. That is how a live game becomes a test fixture.
 
+**Start recording** captures every snapshot for a whole game and downloads it as
+one JSON file when the game reaches `gameEnd` (or when you stop it manually) — a
+bulk version of the same idea, meant for handing a finished game to an LLM for
+analysis rather than hand-picking one fixture.
+
 ## Language
 
 The panel follows the language of the BGA page, because it quotes BGA's own button

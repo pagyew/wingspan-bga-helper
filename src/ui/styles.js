@@ -35,11 +35,16 @@ export const PANEL_CSS = `
   .note { margin-top: 8px; padding: 6px 8px; border-radius: 6px;
     background: #3a3326; color: #e6d4a8; font-size: 12px; }
   .note.error { background: #3d2a2a; color: #efb9b4; }
+  .note.ok { background: #23392a; color: #a8e6bb; }
+  .devtools { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
+  .recstatus { color: #e39a9a; font-variant-numeric: tabular-nums; }
   @media (prefers-color-scheme: light) {
     .panel { color: #23282a; background: #f7f7f4; border-color: #d5d8d1; }
     .head { background: #eceee7; border-bottom-color: #d5d8d1; }
     .btn { background: #e2e5dd; border-color: #c6cbc0; color: #33383a; }
     .sub, .move .why, .rank { color: #6a716c; }
     .delta { color: #2f7a41; }
+    .note.ok { background: #e3f3e6; color: #1f6b34; }
+    .recstatus { color: #b5453f; }
   }
 `;

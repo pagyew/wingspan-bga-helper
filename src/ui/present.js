@@ -86,15 +86,27 @@ export function adviceMoves(result, t, birdName) {
   }));
 }
 
-export function buildView({ state, problems, t, mode, advice }) {
+/** A one-off toast for the notes list: recording started/stopped/resumed. */
+export function recordingNotes(event, t) {
+  if (!event) return [];
+  const label =
+    event.reason === 'gameEnd' ? t('recordingAutoSaved') :
+    event.reason === 'resumed' ? t('recordingResumed') :
+    t('recordingSaved');
+  return [{ text: `${label} (${event.count})`, kind: 'ok' }];
+}
+
+export function buildView({ state, problems, t, mode, advice, recording, recordingEvent }) {
   return {
     headline: headline(state, t),
     status: statusLine(state, t),
     mode,
     moves: advice && advice.length ? advice.slice(0, 3) : [],
     detail: detailLine(state, t),
+    recording: recording || { active: false, count: 0 },
     notes: [
       ...notes(state, problems, t),
+      ...recordingNotes(recordingEvent, t),
       ...(state && state.myTurn && (!advice || !advice.length)
         ? [{ text: t('noAdviceYet'), kind: 'warn' }]
         : [])
