@@ -15,10 +15,10 @@ const state = {
   myTurn: true,
   stable: true,
   goals: [
-    { description: 'Eggs in bowl nests', standing: { 1: { value: '4', rank: '0.5', score: '2' } } },
-    { description: 'Birds in forest', standing: { 1: { value: '3', rank: '0.5', score: '3' } } },
-    { description: 'Eggs in platform nests', standing: { 1: { value: '6', rank: '0', score: '6' } } },
-    { description: 'Birds with eggs in cavity nests', standing: { 1: { value: '7', rank: '0', score: '7' } } }
+    { description: 'Eggs in bowl nests', standing: { 1: { value: '4', rank: '0.5', score: '2' }, 2: { value: '4', rank: '0.5', score: '2' } } },
+    { description: 'Birds in forest', standing: { 1: { value: '3', rank: '0.5', score: '3' }, 2: { value: '3', rank: '0.5', score: '3' } } },
+    { description: 'Eggs in platform nests', standing: { 1: { value: '6', rank: '0', score: '6' }, 2: { value: '2', rank: '1', score: '3' } } },
+    { description: 'Birds with eggs in cavity nests', standing: { 1: { value: '7', rank: '0', score: '7' }, 2: { value: '5', rank: '1', score: '4' } } }
   ],
   players: {
     1: { name: 'pagyew', isMe: true, score: 34, cubesLeft: 2, handBirdCount: 8, food: [1, 0, 2, 2, 0] },
@@ -39,7 +39,18 @@ test('status names the opponent turn', () => {
 });
 
 test('detail reports the goal of the current round, not the first one', () => {
-  assert.match(detailLine(state, t), /Eggs in platform nests 6 → 6/);
+  assert.match(detailLine(state, t), /Eggs in platform nests/);
+});
+
+// Issue #8: watch mode must show goal progress for both players, not just mine.
+test('detail reports goal standings for both players, matching gamedatas.goals', () => {
+  assert.match(detailLine(state, t), /pagyew 6 → 6 · Exixel 2 → 3/);
+});
+
+test('a goal with no recorded standing yet is shown without one, never as a silent zero', () => {
+  const noStanding = { ...state, goals: [...state.goals], round: 1 };
+  noStanding.goals[0] = { description: 'Eggs in bowl nests', standing: {} };
+  assert.equal(detailLine(noStanding, t), 'Goals: Eggs in bowl nests —\nOpponent: 3 ▪ 5 🂠 3 🍽');
 });
 
 test('an unstable snapshot is flagged rather than scored', () => {
