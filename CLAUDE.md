@@ -49,6 +49,7 @@ npm run check   # manifest sanity + import graph (src/ must stay dependency-free
 npm run build   # esbuild -> dist/
 npm run watch   # rebuild on change
 npm run package # dist/ -> zip for chrome://extensions
+npm run release # bump version, tag, push -> triggers release.yml to publish the zip
 ```
 
 Run `npm test && npm run check` before every commit. CI runs both on Node 20 and 22
