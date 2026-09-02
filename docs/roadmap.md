@@ -106,6 +106,13 @@ Done when: 95% of the corpus replays to the end with the final score matching BG
 all six rows; every divergence is classified and filed rather than smoothed over;
 `npm run corpus` prints games, turns, card coverage and divergences.
 
+**In progress.** The recorder already dumps whole games, and
+`scripts/make-corpus.mjs` distils a dump into one row per decision:
+`test/fixtures/corpus/decisions.json`, three games and 81 rows so far.
+`npm run corpus` prints legality, final-score calibration and agreement — the
+first two already caught real bugs (see docs/corpus.md and docs/benchmarks.md).
+Still owed: the replay parser for archived games, and the other 47 games.
+
 ### B4 — Model of the unknown
 
 Three sources of uncertainty, each computed rather than guessed. **The deck**:
