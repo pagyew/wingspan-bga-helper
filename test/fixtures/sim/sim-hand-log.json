@@ -1,0 +1,916 @@
+{
+ "players": [
+  "pagyew",
+  "exixel"
+ ],
+ "goals": [
+  "Birds in the forest",
+  "Eggs in bowl nests",
+  "Total birds",
+  "Birds in the wetland"
+ ],
+ "seed": 555,
+ "log": [
+  {
+   "kind": "discardBonus",
+   "discard": 0
+  },
+  {
+   "kind": "openingKeep",
+   "keep": [
+    31,
+    40,
+    89,
+    108,
+    158
+   ]
+  },
+  {
+   "kind": "discardBonus",
+   "discard": 13
+  },
+  {
+   "kind": "openingKeep",
+   "keep": [
+    81,
+    100,
+    140,
+    165,
+    177
+   ]
+  },
+  {
+   "kind": "rowAction",
+   "habitat": "wetland"
+  },
+  {
+   "kind": "takeTrayCard",
+   "from": "tray",
+   "slot": 0,
+   "card": 19
+  },
+  {
+   "kind": "chance",
+   "pending": "trayRefill",
+   "card": 0,
+   "p": 0.006369426751592357
+  },
+  {
+   "kind": "playBird",
+   "bird": 165,
+   "habitat": "forest",
+   "food": [
+    0,
+    1,
+    0,
+    0,
+    0
+   ],
+   "eggsFrom": []
+  },
+  {
+   "kind": "rowAction",
+   "habitat": "forest"
+  },
+  {
+   "kind": "gainFromFeeder",
+   "die": 0,
+   "as": 3
+  },
+  {
+   "kind": "chance",
+   "pending": "feederRefill",
+   "slot": 0,
+   "face": 0,
+   "p": 0.16666666666666666
+  },
+  {
+   "kind": "rowAction",
+   "habitat": "wetland"
+  },
+  {
+   "kind": "takeTrayCard",
+   "from": "tray",
+   "slot": 0,
+   "card": 0
+  },
+  {
+   "kind": "chance",
+   "pending": "trayRefill",
+   "card": 1,
+   "p": 0.00641025641025641
+  },
+  {
+   "kind": "playBird",
+   "bird": 108,
+   "habitat": "grassland",
+   "food": [
+    1,
+    0,
+    0,
+    1,
+    0
+   ],
+   "eggsFrom": []
+  },
+  {
+   "kind": "rowAction",
+   "habitat": "forest"
+  },
+  {
+   "kind": "gainFromFeeder",
+   "die": 0,
+   "as": 0
+  },
+  {
+   "kind": "chance",
+   "pending": "feederRefill",
+   "slot": 0,
+   "face": 0,
+   "p": 0.16666666666666666
+  },
+  {
+   "kind": "rowAction",
+   "habitat": "wetland"
+  },
+  {
+   "kind": "takeTrayCard",
+   "from": "tray",
+   "slot": 0,
+   "card": 1
+  },
+  {
+   "kind": "chance",
+   "pending": "trayRefill",
+   "card": 2,
+   "p": 0.0064516129032258064
+  },
+  {
+   "kind": "rowAction",
+   "habitat": "grassland"
+  },
+  {
+   "kind": "placeEgg",
+   "habitat": "forest",
+   "col": 1
+  },
+  {
+   "kind": "placeEgg",
+   "habitat": "forest",
+   "col": 1
+  },
+  {
+   "kind": "rowAction",
+   "habitat": "forest"
+  },
+  {
+   "kind": "gainFromFeeder",
+   "die": 0,
+   "as": 0
+  },
+  {
+   "kind": "chance",
+   "pending": "feederRefill",
+   "slot": 0,
+   "face": 0,
+   "p": 0.16666666666666666
+  },
+  {
+   "kind": "rowAction",
+   "habitat": "wetland"
+  },
+  {
+   "kind": "takeTrayCard",
+   "from": "tray",
+   "slot": 0,
+   "card": 2
+  },
+  {
+   "kind": "chance",
+   "pending": "trayRefill",
+   "card": 3,
+   "p": 0.006493506493506494
+  },
+  {
+   "kind": "rowAction",
+   "habitat": "grassland"
+  },
+  {
+   "kind": "placeEgg",
+   "habitat": "grassland",
+   "col": 1
+  },
+  {
+   "kind": "placeEgg",
+   "habitat": "grassland",
+   "col": 1
+  },
+  {
+   "kind": "rowAction",
+   "habitat": "forest"
+  },
+  {
+   "kind": "gainFromFeeder",
+   "die": 0,
+   "as": 0
+  },
+  {
+   "kind": "chance",
+   "pending": "feederRefill",
+   "slot": 0,
+   "face": 0,
+   "p": 0.16666666666666666
+  },
+  {
+   "kind": "rowAction",
+   "habitat": "wetland"
+  },
+  {
+   "kind": "takeTrayCard",
+   "from": "tray",
+   "slot": 0,
+   "card": 3
+  },
+  {
+   "kind": "chance",
+   "pending": "trayRefill",
+   "card": 4,
+   "p": 0.006535947712418301
+  },
+  {
+   "kind": "rowAction",
+   "habitat": "grassland"
+  },
+  {
+   "kind": "placeEgg",
+   "habitat": "forest",
+   "col": 1
+  },
+  {
+   "kind": "placeEgg",
+   "skip": true
+  },
+  {
+   "kind": "rowAction",
+   "habitat": "forest"
+  },
+  {
+   "kind": "gainFromFeeder",
+   "die": 0,
+   "as": 0
+  },
+  {
+   "kind": "chance",
+   "pending": "feederRefill",
+   "slot": 0,
+   "face": 0,
+   "p": 0.16666666666666666
+  },
+  {
+   "kind": "rowAction",
+   "habitat": "wetland"
+  },
+  {
+   "kind": "takeTrayCard",
+   "from": "tray",
+   "slot": 0,
+   "card": 4
+  },
+  {
+   "kind": "chance",
+   "pending": "trayRefill",
+   "card": 5,
+   "p": 0.006578947368421052
+  },
+  {
+   "kind": "rowAction",
+   "habitat": "wetland"
+  },
+  {
+   "kind": "takeTrayCard",
+   "from": "tray",
+   "slot": 0,
+   "card": 5
+  },
+  {
+   "kind": "chance",
+   "pending": "trayRefill",
+   "card": 6,
+   "p": 0.006622516556291391
+  },
+  {
+   "kind": "playBird",
+   "bird": 4,
+   "habitat": "grassland",
+   "food": [
+    1,
+    0,
+    0,
+    0,
+    0
+   ],
+   "eggsFrom": []
+  },
+  {
+   "kind": "rowAction",
+   "habitat": "forest"
+  },
+  {
+   "kind": "gainFromFeeder",
+   "die": 0,
+   "as": 0
+  },
+  {
+   "kind": "chance",
+   "pending": "feederRefill",
+   "slot": 0,
+   "face": 0,
+   "p": 0.16666666666666666
+  },
+  {
+   "kind": "rowAction",
+   "habitat": "wetland"
+  },
+  {
+   "kind": "takeTrayCard",
+   "from": "tray",
+   "slot": 0,
+   "card": 6
+  },
+  {
+   "kind": "chance",
+   "pending": "trayRefill",
+   "card": 7,
+   "p": 0.006666666666666667
+  },
+  {
+   "kind": "rowAction",
+   "habitat": "grassland"
+  },
+  {
+   "kind": "placeEgg",
+   "habitat": "grassland",
+   "col": 1
+  },
+  {
+   "kind": "placeEgg",
+   "habitat": "grassland",
+   "col": 1
+  },
+  {
+   "kind": "rowAction",
+   "habitat": "forest"
+  },
+  {
+   "kind": "gainFromFeeder",
+   "die": 0,
+   "as": 0
+  },
+  {
+   "kind": "chance",
+   "pending": "feederRefill",
+   "slot": 0,
+   "face": 0,
+   "p": 0.16666666666666666
+  },
+  {
+   "kind": "rowAction",
+   "habitat": "wetland"
+  },
+  {
+   "kind": "takeTrayCard",
+   "from": "tray",
+   "slot": 0,
+   "card": 7
+  },
+  {
+   "kind": "chance",
+   "pending": "trayRefill",
+   "card": 9,
+   "p": 0.006711409395973154
+  },
+  {
+   "kind": "rowAction",
+   "habitat": "grassland"
+  },
+  {
+   "kind": "placeEgg",
+   "habitat": "grassland",
+   "col": 1
+  },
+  {
+   "kind": "placeEgg",
+   "habitat": "grassland",
+   "col": 1
+  },
+  {
+   "kind": "playBird",
+   "bird": 7,
+   "habitat": "wetland",
+   "food": [
+    2,
+    0,
+    0,
+    0,
+    0
+   ],
+   "eggsFrom": []
+  },
+  {
+   "kind": "rowAction",
+   "habitat": "wetland"
+  },
+  {
+   "kind": "takeTrayCard",
+   "from": "tray",
+   "slot": 0,
+   "card": 9
+  },
+  {
+   "kind": "chance",
+   "pending": "trayRefill",
+   "card": 10,
+   "p": 0.006756756756756757
+  },
+  {
+   "kind": "rowAction",
+   "habitat": "grassland"
+  },
+  {
+   "kind": "placeEgg",
+   "habitat": "grassland",
+   "col": 1
+  },
+  {
+   "kind": "placeEgg",
+   "habitat": "wetland",
+   "col": 1
+  },
+  {
+   "kind": "playBird",
+   "bird": 9,
+   "habitat": "grassland",
+   "food": [
+    1,
+    0,
+    0,
+    0,
+    0
+   ],
+   "eggsFrom": [
+    {
+     "habitat": "forest",
+     "col": 1,
+     "slot": {
+      "card": 165,
+      "eggs": 3,
+      "tucked": 0,
+      "cached": [
+       0,
+       0,
+       0,
+       0,
+       0
+      ]
+     },
+     "n": 1
+    }
+   ]
+  },
+  {
+   "kind": "rowAction",
+   "habitat": "wetland"
+  },
+  {
+   "kind": "takeTrayCard",
+   "from": "tray",
+   "slot": 0,
+   "card": 10
+  },
+  {
+   "kind": "chance",
+   "pending": "trayRefill",
+   "card": 11,
+   "p": 0.006802721088435374
+  },
+  {
+   "kind": "rowAction",
+   "habitat": "grassland"
+  },
+  {
+   "kind": "placeEgg",
+   "habitat": "forest",
+   "col": 1
+  },
+  {
+   "kind": "placeEgg",
+   "habitat": "grassland",
+   "col": 2
+  },
+  {
+   "kind": "placeEgg",
+   "habitat": "grassland",
+   "col": 2
+  },
+  {
+   "kind": "rowAction",
+   "habitat": "wetland"
+  },
+  {
+   "kind": "takeTrayCard",
+   "from": "tray",
+   "slot": 0,
+   "card": 11
+  },
+  {
+   "kind": "chance",
+   "pending": "trayRefill",
+   "card": 12,
+   "p": 0.00684931506849315
+  },
+  {
+   "kind": "rowAction",
+   "habitat": "grassland"
+  },
+  {
+   "kind": "placeEgg",
+   "habitat": "grassland",
+   "col": 2
+  },
+  {
+   "kind": "placeEgg",
+   "habitat": "grassland",
+   "col": 2
+  },
+  {
+   "kind": "placeEgg",
+   "skip": true
+  },
+  {
+   "kind": "rowAction",
+   "habitat": "forest"
+  },
+  {
+   "kind": "gainFromFeeder",
+   "die": 0,
+   "as": 0
+  },
+  {
+   "kind": "chance",
+   "pending": "feederRefill",
+   "slot": 0,
+   "face": 0,
+   "p": 0.16666666666666666
+  },
+  {
+   "kind": "rowAction",
+   "habitat": "wetland"
+  },
+  {
+   "kind": "takeTrayCard",
+   "from": "tray",
+   "slot": 0,
+   "card": 12
+  },
+  {
+   "kind": "chance",
+   "pending": "trayRefill",
+   "card": 13,
+   "p": 0.006896551724137931
+  },
+  {
+   "kind": "rowAction",
+   "habitat": "grassland"
+  },
+  {
+   "kind": "placeEgg",
+   "habitat": "wetland",
+   "col": 1
+  },
+  {
+   "kind": "placeEgg",
+   "skip": true
+  },
+  {
+   "kind": "rowAction",
+   "habitat": "forest"
+  },
+  {
+   "kind": "gainFromFeeder",
+   "die": 0,
+   "as": 0
+  },
+  {
+   "kind": "chance",
+   "pending": "feederRefill",
+   "slot": 0,
+   "face": 0,
+   "p": 0.16666666666666666
+  },
+  {
+   "kind": "rowAction",
+   "habitat": "wetland"
+  },
+  {
+   "kind": "takeTrayCard",
+   "from": "tray",
+   "slot": 0,
+   "card": 13
+  },
+  {
+   "kind": "chance",
+   "pending": "trayRefill",
+   "card": 14,
+   "p": 0.006944444444444444
+  },
+  {
+   "kind": "rowAction",
+   "habitat": "grassland"
+  },
+  {
+   "kind": "placeEgg",
+   "skip": true
+  },
+  {
+   "kind": "placeEgg",
+   "skip": true
+  },
+  {
+   "kind": "placeEgg",
+   "skip": true
+  },
+  {
+   "kind": "playBird",
+   "bird": 13,
+   "habitat": "wetland",
+   "food": [
+    1,
+    0,
+    0,
+    0,
+    0
+   ],
+   "eggsFrom": [
+    {
+     "habitat": "wetland",
+     "col": 1,
+     "slot": {
+      "card": 7,
+      "eggs": 2,
+      "tucked": 0,
+      "cached": [
+       0,
+       0,
+       0,
+       0,
+       0
+      ]
+     },
+     "n": 1
+    }
+   ]
+  },
+  {
+   "kind": "rowAction",
+   "habitat": "wetland"
+  },
+  {
+   "kind": "takeTrayCard",
+   "from": "tray",
+   "slot": 0,
+   "card": 14
+  },
+  {
+   "kind": "chance",
+   "pending": "trayRefill",
+   "card": 15,
+   "p": 0.006993006993006993
+  },
+  {
+   "kind": "rowAction",
+   "habitat": "grassland"
+  },
+  {
+   "kind": "placeEgg",
+   "habitat": "wetland",
+   "col": 1
+  },
+  {
+   "kind": "placeEgg",
+   "habitat": "wetland",
+   "col": 2
+  },
+  {
+   "kind": "rowAction",
+   "habitat": "forest"
+  },
+  {
+   "kind": "gainFromFeeder",
+   "die": 0,
+   "as": 0
+  },
+  {
+   "kind": "chance",
+   "pending": "feederRefill",
+   "slot": 0,
+   "face": 0,
+   "p": 0.16666666666666666
+  },
+  {
+   "kind": "rowAction",
+   "habitat": "wetland"
+  },
+  {
+   "kind": "takeTrayCard",
+   "from": "tray",
+   "slot": 0,
+   "card": 15
+  },
+  {
+   "kind": "chance",
+   "pending": "trayRefill",
+   "card": 16,
+   "p": 0.007042253521126761
+  },
+  {
+   "kind": "takeTrayCard",
+   "from": "tray",
+   "slot": 0,
+   "card": 16
+  },
+  {
+   "kind": "chance",
+   "pending": "trayRefill",
+   "card": 17,
+   "p": 0.0070921985815602835
+  },
+  {
+   "kind": "rowAction",
+   "habitat": "grassland"
+  },
+  {
+   "kind": "placeEgg",
+   "skip": true
+  },
+  {
+   "kind": "placeEgg",
+   "skip": true
+  },
+  {
+   "kind": "placeEgg",
+   "skip": true
+  },
+  {
+   "kind": "rowAction",
+   "habitat": "forest"
+  },
+  {
+   "kind": "gainFromFeeder",
+   "die": 0,
+   "as": 0
+  },
+  {
+   "kind": "chance",
+   "pending": "feederRefill",
+   "slot": 0,
+   "face": 0,
+   "p": 0.16666666666666666
+  },
+  {
+   "kind": "rowAction",
+   "habitat": "wetland"
+  },
+  {
+   "kind": "takeTrayCard",
+   "from": "tray",
+   "slot": 0,
+   "card": 17
+  },
+  {
+   "kind": "chance",
+   "pending": "trayRefill",
+   "card": 18,
+   "p": 0.007142857142857143
+  },
+  {
+   "kind": "rowAction",
+   "habitat": "grassland"
+  },
+  {
+   "kind": "placeEgg",
+   "habitat": "wetland",
+   "col": 2
+  },
+  {
+   "kind": "placeEgg",
+   "skip": true
+  },
+  {
+   "kind": "rowAction",
+   "habitat": "forest"
+  },
+  {
+   "kind": "gainFromFeeder",
+   "die": 0,
+   "as": 0
+  },
+  {
+   "kind": "chance",
+   "pending": "feederRefill",
+   "slot": 0,
+   "face": 0,
+   "p": 0.16666666666666666
+  },
+  {
+   "kind": "rowAction",
+   "habitat": "wetland"
+  },
+  {
+   "kind": "takeTrayCard",
+   "from": "tray",
+   "slot": 0,
+   "card": 18
+  },
+  {
+   "kind": "chance",
+   "pending": "trayRefill",
+   "card": 20,
+   "p": 0.007194244604316547
+  },
+  {
+   "kind": "takeTrayCard",
+   "from": "tray",
+   "slot": 0,
+   "card": 20
+  },
+  {
+   "kind": "chance",
+   "pending": "trayRefill",
+   "card": 21,
+   "p": 0.007246376811594203
+  },
+  {
+   "kind": "rowAction",
+   "habitat": "grassland"
+  },
+  {
+   "kind": "placeEgg",
+   "skip": true
+  },
+  {
+   "kind": "placeEgg",
+   "skip": true
+  },
+  {
+   "kind": "placeEgg",
+   "skip": true
+  },
+  {
+   "kind": "playBird",
+   "bird": 20,
+   "habitat": "grassland",
+   "food": [
+    1,
+    0,
+    0,
+    0,
+    0
+   ],
+   "eggsFrom": [
+    {
+     "habitat": "grassland",
+     "col": 1,
+     "slot": {
+      "card": 108,
+      "eggs": 5,
+      "tucked": 0,
+      "cached": [
+       0,
+       0,
+       0,
+       0,
+       0
+      ]
+     },
+     "n": 1
+    }
+   ]
+  },
+  {
+   "kind": "rowAction",
+   "habitat": "wetland"
+  },
+  {
+   "kind": "takeTrayCard",
+   "from": "tray",
+   "slot": 0,
+   "card": 21
+  },
+  {
+   "kind": "chance",
+   "pending": "trayRefill",
+   "card": 22,
+   "p": 0.0072992700729927005
+  }
+ ]
+}
