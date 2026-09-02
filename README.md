@@ -114,6 +114,17 @@ one JSON file when the game reaches `gameEnd` (or when you stop it manually) —
 bulk version of the same idea, meant for handing a finished game to an LLM for
 analysis rather than hand-picking one fixture.
 
+### Cutting a release
+
+```bash
+npm run release -- patch   # or: minor / major
+```
+
+This must run on an up-to-date, clean `main`. It runs `check` and `test`, bumps
+`package.json` with `npm version`, and pushes the commit and tag. The pushed tag
+triggers `.github/workflows/release.yml`, which builds, packages and publishes
+`wingspan-bga-helper-<version>.zip` as a GitHub Release.
+
 ## Language
 
 The panel follows the language of the BGA page, because it quotes BGA's own button
