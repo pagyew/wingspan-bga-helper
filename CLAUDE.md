@@ -53,6 +53,7 @@ npm run watch   # rebuild on change
 npm run package # dist/ -> zip for chrome://extensions
 npm run release # bump version, tag, push -> triggers release.yml to publish the zip
 npm run board   # milestones, what is in progress, what is ready to pick up
+npm run corpus  # replay recorded games: legality, final-score calibration, agreement
 ```
 
 Run `npm test && npm run check` before every commit. CI runs both on Node 20 and 22
