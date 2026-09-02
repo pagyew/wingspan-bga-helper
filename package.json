@@ -1,6 +1,6 @@
 {
   "name": "wingspan-bga-helper",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Chrome extension that reads a live Wingspan game on Board Game Arena and suggests the strongest next move.",
   "license": "GPL-3.0-or-later",
   "type": "module",
@@ -16,5 +16,7 @@
   "devDependencies": {
     "esbuild": "^0.25.0"
   },
-  "engines": { "node": ">=20" }
+  "engines": {
+    "node": ">=20"
+  }
 }
