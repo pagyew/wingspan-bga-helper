@@ -28,9 +28,13 @@ building anything else for BGA.
 
 ## Status
 
-Early. The bridge and the state reader work; the evaluator is not wired into the
-panel yet. See [docs/plan.md](docs/plan.md) for the milestones and the
-[issues](https://github.com/pagyew/wingspan-bga-helper/issues) for what is next.
+Early, and honest about it. The bridge, the state reader and the evaluator all work:
+the panel ranks the moves available right now and says by how much each one is ahead.
+What it does not yet do is think past this turn — which is the whole of
+[docs/roadmap.md](docs/roadmap.md), a nine-milestone path from a one-move advisor to
+an engine that plans a round, names the card to take and the bird to put the egg on,
+and can be measured against real games. [docs/plan.md](docs/plan.md) covers the
+extension itself; [docs/process.md](docs/process.md) covers how the work runs.
 
 What already exists:
 
@@ -40,9 +44,10 @@ What already exists:
 - notification subscriptions plus a heartbeat that survives a BGA rename
 - `validateState`, so a snapshot taken mid-animation is refused rather than scored
 
-The scoring and evaluation modules were verified separately before this repository
-existed — all six scoring rows for both players in two real games (91 : 89 and
-87 : 86). Porting them in is milestone M2.
+The scoring and evaluation modules were verified against two finished games — all six
+scoring rows for both players (91 : 89 and 87 : 86) — before this repository existed,
+and now live in `src/engine/`. That verified scoring is the floor everything else is
+built on: the engine's guesses are labelled as guesses, and its arithmetic is not.
 
 ## Before you install it
 
