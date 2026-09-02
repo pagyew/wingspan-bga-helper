@@ -32,13 +32,15 @@ src/ui/i18n.js         ru / en strings; follows the BGA page language
 src/engine/            rules model: mat, scoring, evaluate (see docs/engine-port.md)
 .engine-src/           the verified CommonJS original, gitignored — material for that port
 test/                  node --test, no browser
-scripts/               manifest and import-graph checks, packaging, bootstrap
+scripts/               manifest and import-graph checks, packaging, bootstrap, board
+.claude/skills/        project-flow: how milestones, issues and PRs are run here
 ```
 
-The engine has not been ported yet. Its verified original sits in `.engine-src/`
-and runs today: `cd .engine-src && node test.js` prints ВСЁ СОШЛОСЬ across five
-suites, including both reference games. That output is the definition of correct —
-`docs/engine-port.md` says how to bring it in without losing it.
+The engine is ported and wired into the panel (milestone M2). What it does today
+is rank single moves by `V(after) - V(before)`; what it is meant to become is in
+`docs/roadmap.md` — a rules simulator, powers as data, a model of the unknown, and
+search over a whole round. Read that before adding anything to `src/engine/`: several
+of its constants are scheduled for deletion, not for tuning.
 
 ## Commands
 
@@ -50,6 +52,7 @@ npm run build   # esbuild -> dist/
 npm run watch   # rebuild on change
 npm run package # dist/ -> zip for chrome://extensions
 npm run release # bump version, tag, push -> triggers release.yml to publish the zip
+npm run board   # milestones, what is in progress, what is ready to pick up
 ```
 
 Run `npm test && npm run check` before every commit. CI runs both on Node 20 and 22
@@ -65,6 +68,22 @@ engine must reproduce (91 : 89).
 
 Do not add a browser dependency to the test suite. Anything worth asserting should
 be expressible against a snapshot, which is why `Copy snapshot` exists.
+
+## Where this is going, and how work is run
+
+`docs/roadmap.md` holds the milestones B1-B9 that take this from a one-move advisor to
+an engine that plans a round. `docs/process.md` holds the loop that gets there:
+milestone -> tasks with an acceptance criterion -> branch -> PR -> acceptance -> a
+number in `docs/benchmarks.md`. Two rules from it are worth repeating here because
+they bite inside the code:
+
+- **No task without an acceptance criterion** that a command answers yes or no.
+- **A number never moves without the measurement that moved it.** Any change to
+  weights, search or evaluation carries an arena or corpus number in the PR. The
+  heuristic weights are exactly the thing that looks better after every edit and is
+  worse a month later.
+
+`.claude/skills/project-flow/SKILL.md` has the exact commands.
 
 ## Style
 

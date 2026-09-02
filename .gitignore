@@ -3,6 +3,7 @@ dist/
 *.zip
 .DS_Store
 .env
+.claude/settings.local.json
 *.log
 test/fixtures/private/
 
