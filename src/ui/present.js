@@ -32,14 +32,26 @@ export function notes(state, problems, t) {
   return out;
 }
 
+/** Every player's standing on one goal, local player first — matches gamedatas.goals. */
+function goalStandings(state, current) {
+  const order = [state.myId, ...Object.keys(state.players).filter((id) => id !== state.myId)];
+  return order
+    .map((id) => {
+      const p = state.players[id];
+      const s = current.standing?.[id];
+      return p && s ? `${p.name} ${s.value} → ${s.score}` : null;
+    })
+    .filter(Boolean)
+    .join(' · ');
+}
+
 export function detailLine(state, t) {
   if (!state) return '';
   const parts = [];
   const current = state.goals[state.round - 1];
   if (current) {
-    const mine = current.standing?.[state.myId];
-    const value = mine ? `${mine.value} → ${mine.score}` : '—';
-    parts.push(`${t('goals')}: ${current.description} ${value}`);
+    const standings = goalStandings(state, current);
+    parts.push(`${t('goals')}: ${current.description}${standings ? ` — ${standings}` : ' —'}`);
   }
   const opponent = Object.values(state.players).find((p) => !p.isMe);
   if (opponent) {
