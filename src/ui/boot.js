@@ -16,6 +16,7 @@ import {
   extractTableId, createRecording, appendState, appendError,
   finish, isFinished, countStates, fileName
 } from './recorder.js';
+import { buildDiagnostics, DIAG_KEY } from './diagnostics.js';
 
 const SETTINGS_KEY = 'wsh.settings';
 const RECORDING_KEY = 'wsh.recording';
@@ -32,6 +33,7 @@ let latest = null;
 let adviceCache = { key: null, moves: [], error: null };
 let recording = null; // set while a "record the whole game" session is active
 let resumedNotice = null; // set once, shown on the first HELLO after a reload
+let lastError = null; // last read or eval failure, surfaced on the options page
 
 /** Cheap, order-independent hash — same approach as fingerprint() in page/state.js. */
 function hashString(s) {
@@ -111,6 +113,17 @@ const writeRecording = async () => {
   }
 };
 
+const writeDiagnostics = async () => {
+  try {
+    const problems = latest ? validateState(latest, db) : [];
+    await chrome.storage.local.set({
+      [DIAG_KEY]: buildDiagnostics({ snapshot: latest, problems, dbHash, lastError })
+    });
+  } catch {
+    /* storage can be unavailable in a locked-down profile — the panel still works */
+  }
+};
+
 /** No `chrome.downloads` permission needed: a Blob URL and a synthetic click do the job. */
 function downloadRecording(rec) {
   const blob = new Blob([JSON.stringify(rec, null, 2)], { type: 'application/json' });
@@ -186,6 +199,7 @@ function redraw(extra = {}) {
   const t = translator(resolveLocale(settings.locale));
   const problems = latest ? validateState(latest, db) : [];
   const { moves, error } = computeAdvice(problems);
+  if (error) lastError = { where: 'evaluate', message: error, at: Date.now() };
   const allProblems = error ? [...problems, `${t('evalError')}: ${error}`] : problems;
   p.render(
     buildView({
@@ -198,6 +212,7 @@ function redraw(extra = {}) {
       ...extra
     })
   );
+  writeDiagnostics();
 }
 
 window.addEventListener('message', (event) => {
@@ -237,6 +252,7 @@ window.addEventListener('message', (event) => {
     }
 
     if (settings.mode === 'watch' || latest.myTurn) redraw();
+    else writeDiagnostics(); // redraw() would have written it — keep it current either way
     return;
   }
 
@@ -245,6 +261,8 @@ window.addEventListener('message', (event) => {
       appendError(recording, { where: data.where, message: data.message });
       writeRecording();
     }
+    lastError = { where: data.where, message: data.message, at: Date.now() };
+    writeDiagnostics();
     const t = translator(resolveLocale(settings.locale));
     ensurePanel().render({
       headline: t('title'),
