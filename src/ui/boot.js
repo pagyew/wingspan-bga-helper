@@ -177,7 +177,13 @@ function ensurePanel() {
     },
     onSnapshot: async () => {
       if (!latest) return;
-      const dump = JSON.stringify({ state: latest, dbHash }, null, 2);
+      // db, not just its hash: scripts/snapshot-to-fixture.mjs needs the bird/bonus
+      // identifiers to turn this dump into a fixture, same as a recording already gets.
+      const dump = JSON.stringify(
+        { table: extractTableId(location.href), state: latest, db, dbHash },
+        null,
+        2
+      );
       try {
         await navigator.clipboard.writeText(dump);
       } catch {
